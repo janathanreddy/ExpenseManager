@@ -1,4 +1,17 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="1" systemVersion="11A491" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithCloudKit="false" userDefinedModelVersionIdentifier="">
-    <elements/>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="17709" systemVersion="20C69" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="IncomeExpense" representedClassName="IncomeExpense" syncable="YES" codeGenerationType="class">
+        <attribute name="amount_attribute" optional="YES" attributeType="String"/>
+        <attribute name="category_attribute" optional="YES" attributeType="String"/>
+        <attribute name="date_attribute" optional="YES" attributeType="String"/>
+        <attribute name="detailnotes_attribute" optional="YES" attributeType="String"/>
+        <attribute name="incomeorexpense_attribute" optional="YES" attributeType="String"/>
+        <attribute name="payer_attribute" optional="YES" attributeType="String"/>
+        <attribute name="paymentmethod_attribute" optional="YES" attributeType="String"/>
+        <attribute name="remind_attribute" optional="YES" attributeType="String"/>
+        <attribute name="time_attribute" optional="YES" attributeType="String"/>
+    </entity>
+    <elements>
+        <element name="IncomeExpense" positionX="-63" positionY="-18" width="128" height="164"/>
+    </elements>
 </model>
