@@ -8,7 +8,8 @@
 import UIKit
 import CoreData
 
-class InputViewController: UIViewController {
+class InputViewController: UIViewController,UIPickerViewDataSource,UIPickerViewDelegate,UITextFieldDelegate {
+   
 
     @IBOutlet weak var SegMentControll: UISegmentedControl!
     @IBOutlet weak var ViewForInput: UIView!
@@ -28,7 +29,10 @@ class InputViewController: UIViewController {
     var remaind:Float!
     var incomeamount:String!
     var expenseamount:String!
-    
+    var designationview = UIPickerView()
+    var Categories:[String] = ["Salary","Business Profit","Bank Profit","Other Income"]
+    var ExpenseCategories:[String] = ["Housing","Food","Transportation","Utilities","Insurance","Medical & Healthcare","Recharges","Electricity","Entertainment","Insurance"]
+    var Payment_Type:[String] = ["UPI","Debit Card","Credit Card","Internet Banking","Paypal"]
     override func viewDidLoad() {
         super.viewDidLoad()
         segmentindex = 0
@@ -36,6 +40,17 @@ class InputViewController: UIViewController {
         ButtomLine()
         TodayDate()
         SaveTime()
+        designationview.dataSource=self
+        designationview.delegate=self
+        CategoryType.inputView = designationview
+        PaymentMethod.inputView = designationview
+
+        CategoryType.delegate = self
+        PaymentMethod.delegate = self
+        anyDetailsNotes.text = "Any Income Detail Notes"
+        anyDetailsNotes.textColor = UIColor.lightGray
+
+
     }
 
     @IBAction func SegmentControl(_ sender: UISegmentedControl) {
@@ -43,16 +58,23 @@ class InputViewController: UIViewController {
         print("segmentindex: \(sender.selectedSegmentIndex)")
         segmentindex = sender.selectedSegmentIndex
         if sender.selectedSegmentIndex == 1{
+            IncomeAmount.text = ""
+            PayerDetail.text = ""
+            CategoryType.text = ""
+            PaymentMethod.text = ""
+            anyDetailsNotes.text = ""
             IncomeAmount.placeholder = "Expense Amount"
             SegMentControll.selectedSegmentTintColor = UIColor.systemRed
             ViewForInput.backgroundColor = UIColor.systemYellow
-
+            anyDetailsNotes.text = "Any Expense Detail Notes"
+            anyDetailsNotes.textColor = UIColor.lightGray
             
         }else{
             IncomeAmount.placeholder = "Income Amount"
             SegMentControll.selectedSegmentTintColor = UIColor.systemGreen
             ViewForInput.backgroundColor = UIColor.systemGreen
-
+            anyDetailsNotes.text = "Any Income Detail Notes"
+            anyDetailsNotes.textColor = UIColor.lightGray
         }
     }
     func ButtomLine(){
@@ -153,4 +175,58 @@ class InputViewController: UIViewController {
         time = dateformat.string(from: time_1)
     }
     
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int{
+        if segmentindex == 1 {
+            if PaymentMethod.isEditing == true{
+                return Payment_Type.count
+            }else{
+                return ExpenseCategories.count
+            }
+        }else {
+            if PaymentMethod.isEditing == true{
+                return Payment_Type.count
+            }else{
+                return Categories.count
+            }
+        }
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        if segmentindex == 1{
+            if PaymentMethod.isEditing == true{
+                return Payment_Type[row]
+            }else{
+                return ExpenseCategories[row]
+            }
+        }else{
+            if PaymentMethod.isEditing == true{
+                return Payment_Type[row]
+            }else{
+                return Categories[row]
+            }
+        }
+
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        if segmentindex == 1{
+            if PaymentMethod.isEditing == true{
+                PaymentMethod.text = Payment_Type[row]
+            }else{
+                CategoryType.text = ExpenseCategories[row]
+            }
+        }else{
+            if PaymentMethod.isEditing == true {
+                PaymentMethod.text = Payment_Type[row]
+            }else{
+                CategoryType.text = Categories[row]
+            }
+        }
+        PaymentMethod.resignFirstResponder()
+        CategoryType.resignFirstResponder()
+    }
 }

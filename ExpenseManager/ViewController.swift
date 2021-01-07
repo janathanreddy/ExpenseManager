@@ -10,14 +10,13 @@ import CoreData
 
 class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource {
    
+    @IBOutlet weak var CancelBtn: UIButton!
     @IBOutlet var UpdateView: UIView!
     @IBOutlet weak var Amount_Update: UITextField!
     @IBOutlet weak var Payer_Update: UITextField!
     @IBOutlet weak var Category_Update: UITextField!
     @IBOutlet weak var Payment_Update: UITextField!
     @IBOutlet weak var Details_Update: UITextField!
-    @IBOutlet weak var Date_Update: UITextField!
-    @IBOutlet weak var Time_Update: UITextField!
     
     @IBOutlet weak var Update_btn: UIButton!
     @IBOutlet weak var tableView: UITableView!
@@ -28,18 +27,29 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        Bottomline()
         tableView.delegate = self
         tableView.dataSource = self
+        tableView.rowHeight = 111
         AddItemBtn.layer.cornerRadius = 3
         Update_btn.layer.cornerRadius = 5
+        CancelBtn.layer.cornerRadius = 5
         loadtask()
-        
+        UpdateView.layer.borderWidth = 1
+        UpdateView.layer.borderColor = UIColor.black.cgColor
+        UpdateView.layer.cornerRadius = 10
+        UpdateView.dropShadow(color: .systemPink, opacity: 1, offSet: CGSize(width: -1, height: 1), radius: 5, scale: true)
     }
     
     override func viewDidAppear(_ animated: Bool) {
         loadtask()
+        tableView.rowHeight = 111
     }
     
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+       
+                
+    }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return ExpenseAttribute.count
     }
@@ -119,18 +129,12 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
            let objectUpdate2 = test[0] as! NSManagedObject
            let objectUpdate3 = test[0] as! NSManagedObject
            let objectUpdate4 = test[0] as! NSManagedObject
-            let objectUpdate5 = test[0] as! NSManagedObject
-            let objectUpdate6 = test[0] as! NSManagedObject
-
 
            objectUpdate.setValue("\(Amount_Update.text!)", forKey: "amount_attribute")
            objectUpdate1.setValue("\(Payer_Update.text!)", forKey: "payer_attribute")
            objectUpdate2.setValue("\(Category_Update.text!)", forKey: "category_attribute")
            objectUpdate3.setValue("\(Payment_Update.text!)", forKey: "paymentmethod_attribute")
            objectUpdate4.setValue("\(Details_Update.text!)", forKey: "detailnotes_attribute")
-           objectUpdate5.setValue("\(Date_Update.text!)", forKey: "date_attribute")
-           objectUpdate6.setValue("\(Time_Update.text!)", forKey: "time_attribute")
-
 
                 do{
                     try context.save()
@@ -176,12 +180,60 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
         date_String.append(ExpenseAttribute[indexPath.row].date_attribute!)
         Amount_Update.text = ExpenseAttribute[indexPath.row].amount_attribute
         Category_Update.text = ExpenseAttribute[indexPath.row].category_attribute
-        Date_Update.text = ExpenseAttribute[indexPath.row].date_attribute
         Details_Update.text = ExpenseAttribute[indexPath.row].detailnotes_attribute
         Payer_Update.text = ExpenseAttribute[indexPath.row].payer_attribute
         Payment_Update.text = ExpenseAttribute[indexPath.row].paymentmethod_attribute
-        Time_Update.text = ExpenseAttribute[indexPath.row].time_attribute
     }
+    
+    func Bottomline(){
+        var bottomLine = CALayer()
+        bottomLine.frame = CGRect(x: 0.0, y: Amount_Update.frame.height - 1, width: Amount_Update.frame.width, height: 1.0)
+        bottomLine.backgroundColor = UIColor.systemGray4.cgColor
+        Amount_Update.borderStyle = UITextField.BorderStyle.none
+        Amount_Update.layer.addSublayer(bottomLine)
+        
+        
+        var bottomLine_2 = CALayer()
+        bottomLine_2.frame = CGRect(x: 0.0, y: Category_Update.frame.height - 1, width: Category_Update.frame.width, height: 1.0)
+        bottomLine_2.backgroundColor = UIColor.systemGray4.cgColor
+        Category_Update.borderStyle = UITextField.BorderStyle.none
+        Category_Update.layer.addSublayer(bottomLine_2)
+        
+        var bottomLine_3 = CALayer()
+        bottomLine_3.frame = CGRect(x: 0.0, y: Payer_Update.frame.height - 1, width: Payer_Update.frame.width, height: 1.0)
+        bottomLine_3.backgroundColor = UIColor.systemGray4.cgColor
+        Payer_Update.borderStyle = UITextField.BorderStyle.none
+        Payer_Update.layer.addSublayer(bottomLine_3)
+        
+        var bottomLine_4 = CALayer()
+        bottomLine_4.frame = CGRect(x: 0.0, y: Payment_Update.frame.height - 1, width: Payment_Update.frame.width, height: 1.0)
+        bottomLine_4.backgroundColor = UIColor.systemGray4.cgColor
+        Payment_Update.borderStyle = UITextField.BorderStyle.none
+        Payment_Update.layer.addSublayer(bottomLine_4)
+        
+        var bottomLine_5 = CALayer()
+        bottomLine_5.frame = CGRect(x: 0.0, y: Details_Update.frame.height - 1, width: Details_Update.frame.width, height: 1.0)
+        bottomLine_5.backgroundColor = UIColor.systemGray4.cgColor
+        Details_Update.borderStyle = UITextField.BorderStyle.none
+        Details_Update.layer.addSublayer(bottomLine_4)
+    }
+    
+    @IBAction func CancelAct(_ sender: Any) {
+        animatedismiss(desiredView: UpdateView)
+    }
+    
     
 }
 
+extension UIView {
+    func dropShadow(color: UIColor, opacity: Float = 0.5, offSet: CGSize, radius: CGFloat = 1, scale: Bool = true) {
+        layer.masksToBounds = false
+        layer.shadowColor = color.cgColor
+        layer.shadowOpacity = opacity
+        layer.shadowOffset = offSet
+        layer.shadowRadius = radius
+        layer.shadowPath = UIBezierPath(rect: self.bounds).cgPath
+        layer.shouldRasterize = true
+        layer.rasterizationScale = scale ? UIScreen.main.scale : 1
+      }
+}

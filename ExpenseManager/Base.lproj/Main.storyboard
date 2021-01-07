@@ -71,8 +71,8 @@
                                                                 <constraint firstAttribute="width" constant="92" id="HwD-YM-fek"/>
                                                                 <constraint firstAttribute="height" constant="49" id="p4a-Ld-Be4"/>
                                                             </constraints>
-                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                            <nil key="textColor"/>
+                                                            <fontDescription key="fontDescription" type="system" weight="medium" pointSize="17"/>
+                                                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                     </subviews>
@@ -129,12 +129,11 @@
                     <connections>
                         <outlet property="AddItemBtn" destination="6bT-z2-ogf" id="4qG-MU-0p5"/>
                         <outlet property="Amount_Update" destination="C5e-ZU-oaO" id="uN4-Lm-uPy"/>
+                        <outlet property="CancelBtn" destination="FPV-Ae-rnT" id="Xzq-f7-cPr"/>
                         <outlet property="Category_Update" destination="TAB-yZ-Pdo" id="imh-pP-Ssb"/>
-                        <outlet property="Date_Update" destination="OS1-xF-4bf" id="IgJ-Gi-aLM"/>
                         <outlet property="Details_Update" destination="dMy-Qg-ORW" id="OTE-2o-87H"/>
                         <outlet property="Payer_Update" destination="IGl-nP-eah" id="w0Y-tb-OTg"/>
                         <outlet property="Payment_Update" destination="PDt-Yh-FwC" id="Zvy-S6-qQh"/>
-                        <outlet property="Time_Update" destination="f0P-4g-rfF" id="O0y-li-U2n"/>
                         <outlet property="UpdateView" destination="qie-CD-Rbv" id="pbp-Ex-kUd"/>
                         <outlet property="Update_btn" destination="LcV-st-zWU" id="9l6-nH-Cwe"/>
                         <outlet property="tableView" destination="qqX-xY-7uN" id="cLx-kP-GGS"/>
@@ -180,20 +179,6 @@
                             <nil key="textColor"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Date" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jQY-4d-dbJ">
-                            <rect key="frame" x="16" y="240" width="70" height="30"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                            <nil key="textColor"/>
-                            <nil key="highlightedColor"/>
-                        </label>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Time" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QAu-hr-2JU">
-                            <rect key="frame" x="16" y="278" width="70" height="30"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                            <nil key="textColor"/>
-                            <nil key="highlightedColor"/>
-                        </label>
                         <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="C5e-ZU-oaO">
                             <rect key="frame" x="113" y="42" width="221" height="34"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -224,20 +209,8 @@
                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                             <textInputTraits key="textInputTraits"/>
                         </textField>
-                        <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="OS1-xF-4bf">
-                            <rect key="frame" x="113" y="238" width="221" height="34"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                            <textInputTraits key="textInputTraits"/>
-                        </textField>
-                        <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="f0P-4g-rfF">
-                            <rect key="frame" x="113" y="280" width="221" height="34"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                            <textInputTraits key="textInputTraits"/>
-                        </textField>
                         <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LcV-st-zWU">
-                            <rect key="frame" x="130" y="330" width="90" height="45"/>
+                            <rect key="frame" x="73" y="330" width="90" height="45"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <color key="backgroundColor" systemColor="systemBlueColor"/>
                             <state key="normal" title="Update">
@@ -245,6 +218,17 @@
                             </state>
                             <connections>
                                 <action selector="Update_Act:" destination="BYZ-38-t0r" eventType="touchUpInside" id="0C4-Rh-GVn"/>
+                            </connections>
+                        </button>
+                        <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FPV-Ae-rnT">
+                            <rect key="frame" x="171" y="330" width="90" height="45"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <color key="backgroundColor" systemColor="systemGray4Color"/>
+                            <state key="normal" title="Cancel">
+                                <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </state>
+                            <connections>
+                                <action selector="CancelAct:" destination="BYZ-38-t0r" eventType="touchUpInside" id="gdL-SR-Kne"/>
                             </connections>
                         </button>
                     </subviews>
@@ -326,7 +310,7 @@
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="type of Category" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="TKl-zn-qKy">
+                                            <textField opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="type of Category" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="TKl-zn-qKy">
                                                 <rect key="frame" x="120" y="0.0" width="238" height="34"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="238" id="V2S-1v-oui"/>
@@ -350,7 +334,7 @@
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="income cash,card etc." textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="mMY-KM-xTn">
+                                            <textField opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="income cash,card etc." textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="mMY-KM-xTn">
                                                 <rect key="frame" x="148" y="0.0" width="218" height="38"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="218" id="9Ia-dc-d3f"/>
@@ -527,6 +511,9 @@
         </systemColor>
         <systemColor name="systemBlueColor">
             <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemGray4Color">
+            <color red="0.81960784313725488" green="0.81960784313725488" blue="0.83921568627450982" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemGreenColor">
             <color red="0.20392156862745098" green="0.7803921568627451" blue="0.34901960784313724" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
