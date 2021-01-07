@@ -9,6 +9,8 @@ import UIKit
 import CoreData
 
 class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource {
+    
+    
    
     @IBOutlet weak var CancelBtn: UIButton!
     @IBOutlet var UpdateView: UIView!
@@ -39,8 +41,99 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
         UpdateView.layer.borderColor = UIColor.black.cgColor
         UpdateView.layer.cornerRadius = 10
         UpdateView.dropShadow(color: .systemPink, opacity: 1, offSet: CGSize(width: -1, height: 1), radius: 5, scale: true)
+        tableView.dragInteractionEnabled = true
+        
+        let longpress = UILongPressGestureRecognizer(target: self, action: #selector(longPressGestureRecognized(gestureRecognizer:)))
+        self.tableView.addGestureRecognizer(longpress)
+
+        
     }
-    
+    @objc func longPressGestureRecognized(gestureRecognizer: UIGestureRecognizer) {
+
+        let longpress = gestureRecognizer as! UILongPressGestureRecognizer
+        let state = longpress.state
+        let locationInView = longpress.location(in: self.tableView)
+        var indexPath = self.tableView.indexPathForRow(at: locationInView)
+
+        switch state {
+        case .began:
+            if indexPath != nil {
+                Path.initialIndexPath = indexPath
+                let cell = self.tableView.cellForRow(at: indexPath!) as! ExpenseTableViewCell
+                My.cellSnapShot = snapshopOfCell(inputView: cell)
+                var center = cell.center
+                My.cellSnapShot?.center = center
+                My.cellSnapShot?.alpha = 0.0
+                self.tableView.addSubview(My.cellSnapShot!)
+
+                UIView.animate(withDuration: 0.25, animations: {
+                    center.y = locationInView.y
+                    My.cellSnapShot?.center = center
+                    My.cellSnapShot?.transform = CGAffineTransform(scaleX: 1.05, y: 1.05)
+                    My.cellSnapShot?.alpha = 0.98
+                    cell.alpha = 0.0
+                }, completion: { (finished) -> Void in
+                    if finished {
+                        cell.isHidden = true
+                    }
+                })
+            }
+
+        case .changed:
+            var center = My.cellSnapShot?.center
+            center?.y = locationInView.y
+            My.cellSnapShot?.center = center!
+            if ((indexPath != nil) && (indexPath != Path.initialIndexPath)) {
+
+                self.ExpenseAttribute.swapAt((indexPath?.row)!, (Path.initialIndexPath?.row)!)
+                //swap(&self.wayPoints[(indexPath?.row)!], &self.wayPoints[(Path.initialIndexPath?.row)!])
+                self.tableView.moveRow(at: Path.initialIndexPath!, to: indexPath!)
+                Path.initialIndexPath = indexPath
+            }
+
+        default:
+            let cell = self.tableView.cellForRow(at: Path.initialIndexPath!) as! ExpenseTableViewCell
+            cell.isHidden = false
+            cell.alpha = 0.0
+            UIView.animate(withDuration: 0.25, animations: {
+                My.cellSnapShot?.center = cell.center
+                My.cellSnapShot?.transform = .identity
+                My.cellSnapShot?.alpha = 0.0
+                cell.alpha = 1.0
+            }, completion: { (finished) -> Void in
+                if finished {
+                    Path.initialIndexPath = nil
+                    My.cellSnapShot?.removeFromSuperview()
+                    My.cellSnapShot = nil
+                }
+            })
+        }
+    }
+
+    func snapshopOfCell(inputView: UIView) -> UIView {
+
+        UIGraphicsBeginImageContextWithOptions(inputView.bounds.size, false, 0.0)
+        inputView.layer.render(in: UIGraphicsGetCurrentContext()!)
+        let image = UIGraphicsGetImageFromCurrentImageContext()!
+        UIGraphicsEndImageContext()
+        let cellSnapshot : UIView = UIImageView(image: image)
+        cellSnapshot.layer.masksToBounds = false
+        cellSnapshot.layer.cornerRadius = 0.0
+        cellSnapshot.layer.shadowOffset = CGSize(width: -5.0, height: 0.0)
+        cellSnapshot.layer.shadowRadius = 5.0
+        cellSnapshot.layer.shadowOpacity = 0.4
+        return cellSnapshot
+    }
+
+    struct My {
+        static var cellSnapShot: UIView? = nil
+    }
+
+    struct Path {
+        static var initialIndexPath: IndexPath? = nil
+    }
+
+
     override func viewDidAppear(_ animated: Bool) {
         loadtask()
         tableView.rowHeight = 111
@@ -177,6 +270,9 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         animateIn(desiredView: UpdateView)
+//        let longpressgesture = UILongPressGestureRecognizer()
+//        self.view.addGestureRecognizer(longpressgesture)
+//        longpressgesture.addTarget(self, action: #selector(clicklongpress))
         date_String.append(ExpenseAttribute[indexPath.row].date_attribute!)
         Amount_Update.text = ExpenseAttribute[indexPath.row].amount_attribute
         Category_Update.text = ExpenseAttribute[indexPath.row].category_attribute
@@ -184,7 +280,11 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
         Payer_Update.text = ExpenseAttribute[indexPath.row].payer_attribute
         Payment_Update.text = ExpenseAttribute[indexPath.row].paymentmethod_attribute
     }
-    
+//    @objc func clicklongpress()
+//    {
+//        animateIn(desiredView: UpdateView)
+//        print("Long Press Click Successfully")
+//    }
     func Bottomline(){
         var bottomLine = CALayer()
         bottomLine.frame = CGRect(x: 0.0, y: Amount_Update.frame.height - 1, width: Amount_Update.frame.width, height: 1.0)
@@ -222,7 +322,7 @@ class ViewController: UIViewController,UITableViewDelegate,UITableViewDataSource
         animatedismiss(desiredView: UpdateView)
     }
     
-    
+   
 }
 
 extension UIView {

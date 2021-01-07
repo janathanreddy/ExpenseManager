@@ -32,7 +32,7 @@ class InputViewController: UIViewController,UIPickerViewDataSource,UIPickerViewD
     var designationview = UIPickerView()
     var Categories:[String] = ["Salary","Business Profit","Bank Profit","Other Income"]
     var ExpenseCategories:[String] = ["Housing","Food","Transportation","Utilities","Insurance","Medical & Healthcare","Recharges","Electricity","Entertainment","Insurance"]
-    var Payment_Type:[String] = ["UPI","Debit Card","Credit Card","Internet Banking","Paypal"]
+    var Payment_Type:[String] = ["Bank","UPI","Debit Card","Credit Card","Internet Banking","Paypal"]
     override func viewDidLoad() {
         super.viewDidLoad()
         segmentindex = 0
@@ -49,8 +49,8 @@ class InputViewController: UIViewController,UIPickerViewDataSource,UIPickerViewD
         PaymentMethod.delegate = self
         anyDetailsNotes.text = "Any Income Detail Notes"
         anyDetailsNotes.textColor = UIColor.lightGray
-
-
+        
+        
     }
 
     @IBAction func SegmentControl(_ sender: UISegmentedControl) {
